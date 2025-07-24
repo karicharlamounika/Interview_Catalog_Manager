@@ -13,7 +13,8 @@
   },
 
   "scripts": {
-  "test:api": "newman run ./tests/cataloganger.postman_collection.json"
+    "start-backend": "node ./src/server.js",
+    "test:api": "newman run ./tests/cataloganger.postman_collection.json"
   }
 
 }
