@@ -24,6 +24,10 @@ function authenticateToken(req, res, next) {
   });
 }
 
+app.get('/health', (req, res) => {
+  res.sendStatus(200);
+});
+
 // Register new user
 app.post("/register", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
