@@ -4,4 +4,4 @@ cd frontend
 echo Installing frontend dependencies...
 call npm install
 echo Starting frontend.
-call npm run dev
+call npm run start-frontend
