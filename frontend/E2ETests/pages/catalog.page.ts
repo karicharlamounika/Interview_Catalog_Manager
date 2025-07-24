@@ -137,4 +137,8 @@ export default class Catalog {
         await this.reusableFunctions.clickOn(this.logoutBtn);
     }
 
+    public async validateLogoutBtnIsVisible() {
+        const isVisible = await this.page.isVisible(this.logoutBtn);
+        return isVisible;
+    }
 }

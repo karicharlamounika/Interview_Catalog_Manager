@@ -4,7 +4,7 @@
   "version": "0.0.0",
  "scripts": {
     "start-backend": "node ./server.js",
-    "test:api": "newman run ./tests/catalogmanger.postman_collection.json --reporters cli,html --reporter-html-export ./tests/api_test_results/api_test_results.xml"
+    "test:api": "newman run ./tests/catalogmanger.postman_collection.json --reporters cli,json --reporter-json-export ./tests/api_test_results/api_test_results.json"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

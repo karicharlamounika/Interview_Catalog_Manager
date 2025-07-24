@@ -11,6 +11,7 @@ export default class Login{
     private emailTxt = "[test-id='useremail']";
     private passwordTxt = "[test-id='password']";
     private loginbtn = "[test-id='login']";
+    private registerLink = "[test-id='registerHere']";
 
     constructor(page : Page){
         this.page = page;
@@ -36,5 +37,10 @@ export default class Login{
         await this.enterPassword();
         await this.clickLogin();
         await this.waits.waitforPageToBeLoaded();
+    }
+
+    public async clickOnRegister(){
+        await this.reusableFunctions.clickOn(this.registerLink);
+        await this.waits.waitforLoadState;
     }
 }

@@ -8,7 +8,8 @@ export default class CommonWaits {
 
     public async waitforPageToBeLoaded() {
         await this.page.waitForResponse(response => {
-            return response.request().resourceType() === "xhr"
+            return response.request().resourceType() === "xhr" ||
+                response.request().resourceType() === "fetch";
         })
     }
     public async waitforElementVisible(selector: string) {
@@ -16,7 +17,7 @@ export default class CommonWaits {
     }
 
     public async waitforLoadState() {
-        await this.page.waitForLoadState('domcontentloaded', { timeout: 120000 });
+        await this.page.waitForLoadState('domcontentloaded', { timeout: 60000 });
     }
 
     public async waitforElement(selector: string) {

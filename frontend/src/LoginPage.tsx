@@ -24,11 +24,11 @@ return (
 <div
   style={{
     display: "flex",
-    justifyContent: "center",  // center horizontally
-    alignItems: "center",      // center vertically
-    height: "100vh",           // full viewport height
-    width: "100vw",            // full viewport width
-    backgroundColor: "#fdf6f0", // pastel background
+    justifyContent: "center",  
+    alignItems: "center",      
+    height: "100vh",          
+    width: "100vw",            
+    backgroundColor: "#fdf6f0", 
     fontFamily: "Arial, sans-serif",
   }}
 >
@@ -87,6 +87,7 @@ return (
       <p style={{ marginTop: "1rem", fontSize: "0.9rem" }}>
         Don’t have an account?{" "}
         <Link
+          test-id = "registerHere"
           to="/register"
           style={{ color: "#6c5ce7", textDecoration: "none" }}
         >
