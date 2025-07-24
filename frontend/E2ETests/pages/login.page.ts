@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
-import CommonWaits from '../utils/commonWait';
-import CommonReusableFunctions from '../utils/commonReusableFunctions';
-import * as data from '../testData.json';
+import CommonWaits from '../utils/commonWait.ts';
+import CommonReusableFunctions from '../utils/commonReusableFunctions.ts';
+import data from '../testData.json' with { type: "json" };
 
 export default class Login{
 

@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
-import CommonWaits from '../utils/commonWait';
-import CommonReusableFunctions from '../utils/commonReusableFunctions';
-import * as data from '../testData.json';
+import CommonWaits from '../utils/commonWait.ts';
+import CommonReusableFunctions from '../utils/commonReusableFunctions.ts';
+import data from '../testData.json' with { type: "json" };
 
 export default class Catalog {
 
@@ -87,7 +87,6 @@ export default class Catalog {
         const itemadded = this.page.locator(this.itemList).last();
         this.actualLastItemList.push(await itemadded.locator('td').nth(0).innerText());
         this.actualLastItemList.push(await itemadded.locator('td').nth(1).innerText());
-        console.log ("Actual Last Item List: ", this.actualLastItemList[0], this.actualLastItemList[1]);
         return this.actualLastItemList;
     }
 

@@ -1,4 +1,11 @@
 {
+  "name":"backend",
+  "private": true,
+  "version": "0.0.0",
+ "scripts": {
+    "start-backend": "node ./server.js",
+    "test:api": "newman run ./tests/catalogmanger.postman_collection.json --reporters cli,html --reporter-html-export ./tests/api_test_results/api_test_results.xml"
+  },
   "dependencies": {
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.0",
@@ -10,10 +17,5 @@
   },
   "devDependencies": {
     "newman": "^6.2.1"
-  },
-
-  "scripts": {
-    "start-backend": "node ./server.js",
-      "test:api": "newman run ./tests/catalogmanger.postman_collection.json --reporters cli,html --reporter-html-export ./tests/api_test_results/api_test_results.xml"
   }
 }

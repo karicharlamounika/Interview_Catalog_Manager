@@ -1,5 +1,5 @@
-import { Browser, BrowserContext, chromium, firefox, Page } from 'playwright';
-import { environment } from '../environment';
+import { Browser, BrowserContext, chromium, Page } from 'playwright';
+import { environment } from '../environment.js';
 
 export default class Basepage {
     public page: Page;
@@ -13,14 +13,12 @@ export default class Basepage {
         Basepage.browser = await chromium.launch({
           headless: false,
         });
-        // const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
        
         this.context = await Basepage.browser.newContext({
             viewport: {width: 1920, height: 1080},
         });
         this.page = await this.context.newPage();
         await this.page.goto(environment.baseurl);
-        //await sleep(30000);
         await this.page.waitForLoadState("domcontentloaded");
         return this.page;
     }

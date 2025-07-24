@@ -1,8 +1,8 @@
 import { test, expect, Page} from '@playwright/test';
-import Basepage from '../pages/base.page';
-import * as data from '../testData.json';
-import LoginPage from '../pages/login.page';
-import CatalogPage from '../pages/catalog.page'; 
+import Basepage from '../pages/base.page.ts';
+import data from '../testData.json' with { type: "json" };
+import LoginPage from '../pages/login.page.ts';
+import CatalogPage from '../pages/catalog.page.ts'; 
 
 
 test.describe("As a logged in User I can add, update and delete an item", ()=>{

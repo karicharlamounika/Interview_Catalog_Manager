@@ -1,5 +1,5 @@
-import { BrowserContext, Page } from "playwright";
-import CommonWaits from "./commonWait";
+import { Page } from "playwright";
+import CommonWaits from "./commonWait.ts";
 
 export default class CommonReusableFunctions {
     private page: Page;
