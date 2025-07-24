@@ -1,0 +1,40 @@
+import { Page } from 'playwright';
+import CommonWaits from '../utils/commonWait';
+import CommonReusableFunctions from '../utils/commonReusableFunctions';
+import * as data from '../testData.json'
+
+export default class Login{
+
+    private page : Page;
+    private waits : CommonWaits
+    private reusableFunctions: CommonReusableFunctions;
+    private emailTxt = "[test-id='useremail']";
+    private passwordTxt = "[test-id='password']";
+    private loginbtn = "[test-id='login']";
+
+    constructor(page : Page){
+        this.page = page;
+        this.waits = new CommonWaits(page);
+        this.reusableFunctions = new CommonReusableFunctions(page);
+    }
+
+    public async enterEmail(){
+        await this.reusableFunctions.fillText(this.emailTxt,data.email);
+    }
+
+    public async enterPassword(){
+        await this.reusableFunctions.fillText(this.passwordTxt,data.password);
+    }
+
+    public async clickLogin(){
+        await this.reusableFunctions.clickOn(this.loginbtn);
+        await this.waits.waitforLoadState();
+    }
+
+    public async login(){
+        this.enterEmail();
+        this.enterPassword();
+        this.clickLogin();
+        this.waits.waitforPageToBeLoaded();
+    }
+}
