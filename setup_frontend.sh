@@ -3,4 +3,4 @@ cd frontend
 echo "Installing frontend dependencies..."
 npm install
 echo "Starting frontend."
-npm run dev
+nohup npm run dev > frontend.log 2>&1 &
