@@ -11,7 +11,7 @@ export default class Basepage {
 
     async navigate() {
         Basepage.browser = await chromium.launch({
-          headless: false,
+          headless: true,
         });
        
         this.context = await Basepage.browser.newContext({

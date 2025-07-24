@@ -92,7 +92,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"bob231@gma.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+							"raw": "{\r\n    \"email\" : \"sheldoncooper@gmail.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -410,7 +410,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \r\n    \"firstName\": \"Bob\",\r\n    \"lastName\": \"Sheldon\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"bob231@gma.com\"\r\n}",
+							"raw": "{\r\n    \r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
