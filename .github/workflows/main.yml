@@ -1,0 +1,33 @@
+name: API and E2E Test execution of app catalog manager on GitHub using github actions
+
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    name: E2E test execution of API and UI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Run E2E tests
+        run: npx playwright test
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-using-githubactions
+          path: ./test-results
