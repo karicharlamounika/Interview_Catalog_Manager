@@ -1,6 +1,6 @@
 import { test, expect, Page} from '@playwright/test';
 import Basepage from '../pages/base.page';
-import * as data from '../testData.json'
+import * as data from '../testData.json';
 import LoginPage from '../pages/login.page';
 import CatalogPage from '../pages/catalog.page'; 
 
@@ -20,12 +20,12 @@ test.describe("As a logged in User I can add, update and delete an item", ()=>{
     loginPage = new LoginPage(page1);
     await loginPage.login();
     catalogPage = new CatalogPage(page1);
-    catalogPage.addItem();
+    await catalogPage.addItem();
     expect(await catalogPage.validateItemAdded()).toBeTruthy();
-    catalogPage.updateItem();
+    await catalogPage.updateItem();
     expect(await catalogPage.validateItemUpdated()).toBeTruthy();
     const itemsListBeforeDelete = await catalogPage.getItemNameList();
-    catalogPage.deleteItem();
+    await catalogPage.deleteItem();
     const itemsListAfterDelete = await catalogPage.getItemNameList();
     expect(itemsListBeforeDelete.length).toBeGreaterThan(itemsListAfterDelete.length);
     expect(itemsListAfterDelete).not.toContain(data.NameToBeUpdated);
@@ -33,7 +33,7 @@ test.describe("As a logged in User I can add, update and delete an item", ()=>{
 
    
   test.afterEach(async () => {
-    catalogPage.logout();
+    await catalogPage.logout();
     await basePage.closeBrowser();
   })
 

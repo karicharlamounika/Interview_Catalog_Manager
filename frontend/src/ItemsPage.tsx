@@ -159,7 +159,7 @@ const ItemsPage: React.FC = () => {
           <input
             type="text"
             placeholder="Item Name"
-            test-id="itemName"
+            test-id="Name"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             style={{ padding: "0.5rem", width: "60%", marginRight: "0.5rem" }}

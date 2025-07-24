@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 import CommonWaits from '../utils/commonWait';
 import CommonReusableFunctions from '../utils/commonReusableFunctions';
-import * as data from '../testData.json'
+import * as data from '../testData.json';
 
 export default class Catalog {
 
@@ -11,7 +11,7 @@ export default class Catalog {
     private addNewItemBtn = "[test-id='addNewItem']";
     private editItemBtn = "[test-id='editItem']";
     private deleteItemBtn = "[test-id='deleteItem']";
-    private itemNameTxt = "[test-id='itemName']";
+    private itemNameTxt = "[test-id='Name']";
     private itemQuantityTxt = "[test-id='quantity']";
     private addBtn = "[test-id='add']";
     private editSaveBtn = "[test-id='editSave']";
@@ -32,96 +32,99 @@ export default class Catalog {
         this.expectedAddedItemList = [];
         this.actualLastItemList = [];
         this.expectedUpdatedItemList = [];
-        this.actualItemNameList =[];
+        this.actualItemNameList = [];
     }
 
-    public async clickOnAddNewITem(){
+    public async clickOnAddNewITem() {
         await this.reusableFunctions.clickOn(this.addNewItemBtn);
+        await this.waits.waitforLoadState();
     }
 
-        public async enterNameAndQuantity(){
+    public async enterNameAndQuantity() {
         await this.reusableFunctions.fillText(this.itemNameTxt, data.NametoBeAdded);
         await this.reusableFunctions.fillText(this.itemQuantityTxt, data.QuantitytoBeAdded);
     }
 
-    
-    public async clickOnAdd(){
+
+    public async clickOnAdd() {
         await this.reusableFunctions.clickOn(this.addBtn);
         await this.waits.waitforPageToBeLoaded();
     }
 
-    public async clickOnEditItem(){
+    public async clickOnEditItem() {
         (await this.getEditActions()).locator(this.editItemBtn).click();
     }
 
-    public async enterNewNameAndQuantity(){
-        await this.reusableFunctions.fillText(this.editNameTxt,data.NameToBeUpdated);
-        await this.reusableFunctions.fillText(this.editQuantityTxt,data.QuantityToBeUpdated);
+    public async enterNewNameAndQuantity() {
+        await this.reusableFunctions.fillText(this.editNameTxt, data.NameToBeUpdated);
+        await this.reusableFunctions.fillText(this.editQuantityTxt, data.QuantityToBeUpdated);
     }
 
-    public async clickOnSaveEdit(){
+    public async clickOnSaveEdit() {
         (await this.getEditActions()).locator(this.editSaveBtn).click();
         await this.waits.waitforPageToBeLoaded();
     }
 
-    public async deleteItem(){
+    public async deleteItem() {
         (await this.getEditActions()).locator(this.deleteItemBtn).click();
         await this.waits.waitforPageToBeLoaded();
     }
 
-    public async getEditActions(){
+    public async getEditActions() {
         const lastItemRow = this.page.locator(this.itemList).last();
         const editActions = lastItemRow.locator("[test-id='editActions']");
         return editActions;
     }
 
-    public async addItem(){
-        this.clickOnAddNewITem();
-        this.enterNameAndQuantity();
-        this.clickOnAdd();
-        this.waits.waitforPageToBeLoaded();
+    public async addItem() {
+        await this.clickOnAddNewITem();
+        await this.enterNameAndQuantity();
+        await this.clickOnAdd();
     }
 
-    public async getactualLastItemDetails(){
-        const itemadded =  this.page.locator(this.itemList).last();
-        this.actualLastItemList.push(itemadded.locator('td').nth(0).innerText());
-        this.actualLastItemList.push(itemadded.locator('td').nth(1).innerText());
-        return  this.actualLastItemList;
+    public async getactualLastItemDetails() {
+        const itemadded = this.page.locator(this.itemList).last();
+        this.actualLastItemList.push(await itemadded.locator('td').nth(0).innerText());
+        this.actualLastItemList.push(await itemadded.locator('td').nth(1).innerText());
+        console.log(itemadded.locator('td').nth(0).innerText());
+        console.log(itemadded.locator('td').nth(1).innerText());
+        console.log ("Actual Last Item List: ", this.actualLastItemList[0], this.actualLastItemList[1]);
+        return this.actualLastItemList;
     }
 
-    public async getExpectedAddedItemDetails(){
+    public async getExpectedAddedItemDetails() {
         this.expectedAddedItemList.push(data.NametoBeAdded);
         this.expectedAddedItemList.push(data.QuantitytoBeAdded);
         return this.expectedAddedItemList;
 
     }
 
-    public async validateItemAdded(){
-        const flag = await this.reusableFunctions.compareArrays(await this.getactualLastItemDetails(),await this.getExpectedAddedItemDetails());
+    public async validateItemAdded() {
+        const flag = await this.reusableFunctions.compareArrays(await this.getactualLastItemDetails(), await this.getExpectedAddedItemDetails());
         return flag;
     }
 
-    public async updateItem(){
-        this.clickOnEditItem();
-        this.enterNewNameAndQuantity();
-        this.clickOnSaveEdit();
+    public async updateItem() {
+        await this.clickOnEditItem();
+        await this.enterNewNameAndQuantity();
+        await this.clickOnSaveEdit();
     }
 
-    public async getExpectedUpdatedItemDetails(){
+    public async getExpectedUpdatedItemDetails() {
         this.expectedUpdatedItemList.push(data.NameToBeUpdated);
         this.expectedUpdatedItemList.push(data.QuantityToBeUpdated);
         return this.expectedUpdatedItemList;
     }
-        
-    public async validateItemUpdated(){
-        const flag = await this.reusableFunctions.compareArrays(await this.getactualLastItemDetails(),await this.getExpectedUpdatedItemDetails());
+
+    public async validateItemUpdated() {
+        const flag = await this.reusableFunctions.compareArrays(await this.getactualLastItemDetails(), await this.getExpectedUpdatedItemDetails());
         return flag;
     }
 
-    public async getItemNameList(){
+    public async getItemNameList() {
         const rows = await this.page.locator(this.itemNameList).elementHandles();
-        if((rows).length>0){
-            for(let i=0; i<rows.length; i++){
+        if ((rows).length > 0) {
+            for (let i = 0; i < rows.length; i++) {
                 const elementText = rows[i].innerText();
                 this.actualItemNameList.push(elementText);
             }
@@ -129,7 +132,7 @@ export default class Catalog {
         return this.actualItemNameList;
     }
 
-    public async logout(){
+    public async logout() {
         await this.reusableFunctions.clickOn(this.logoutBtn);
     }
 

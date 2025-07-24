@@ -11,7 +11,7 @@ export default class Basepage {
 
     async navigate() {
         Basepage.browser = await chromium.launch({
-          headless: true,
+          headless: false,
         });
         // const sleep = (ms: number | undefined) => new Promise(r => setTimeout(r, ms));
        
@@ -28,10 +28,5 @@ export default class Basepage {
     public async closeBrowser() {
         await this.context.clearCookies();
         Basepage.browser.close();
-    }
-
-    public async navigateToSection(section: string) {
-        const sectionElement = this.page.getByText(section);
-        await sectionElement.click();
     }
 }

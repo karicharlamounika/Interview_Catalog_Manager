@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 import CommonWaits from '../utils/commonWait';
 import CommonReusableFunctions from '../utils/commonReusableFunctions';
-import * as data from '../testData.json'
+import * as data from '../testData.json';
 
 export default class Login{
 
@@ -32,9 +32,9 @@ export default class Login{
     }
 
     public async login(){
-        this.enterEmail();
-        this.enterPassword();
-        this.clickLogin();
-        this.waits.waitforPageToBeLoaded();
+        await this.enterEmail();
+        await this.enterPassword();
+        await this.clickLogin();
+        await this.waits.waitforPageToBeLoaded();
     }
 }
