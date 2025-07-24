@@ -4,48 +4,48 @@ on:
   workflow_dispatch:
 
 jobs:
-  # build-test-backend:
-  #   name: Build Backend and test API
-  #   runs-on: ubuntu-latest
+  build-test-backend:
+    name: Build Backend and test API
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-  #     - name: Install dependencies and start backend
-  #       run: bash ./setup_backend.sh
+      - name: Install dependencies and start backend
+        run: bash ./setup_backend.sh
 
-  #     - name: Verify backend is started
-  #       run: |
-  #         echo "Waiting for backend to start"
-  #         for i in {1..5}; do
-  #           if curl --fail http://localhost:5000/health; then
-  #             echo "Backend is running!"
-  #             exit 0
-  #           else
-  #             echo "Backend not ready yet. Retrying in 2 seconds..."
-  #             sleep 2
-  #           fi
-  #         done
-  #         echo "Backend did not start in time."
-  #         exit 1
+      - name: Verify backend is started
+        run: |
+          echo "Waiting for backend to start"
+          for i in {1..5}; do
+            if curl --fail http://localhost:5000/health; then
+              echo "Backend is running!"
+              exit 0
+            else
+              echo "Backend not ready yet. Retrying in 2 seconds..."
+              sleep 2
+            fi
+          done
+          echo "Backend did not start in time."
+          exit 1
 
-  #     - name: Run API tests
-  #       run: |
-  #         echo "Running API tests"
-  #         cd backend || exit 1
-  #         npm run test:api
+      - name: Run API tests
+        run: |
+          echo "Running API tests"
+          cd backend || exit 1
+          npm run test:api
 
-  #     - name: Upload test report
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: playwright-report-using-githubactions
-  #         path: .backend/api_test_results
+      # - name: Upload test report
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: playwright-report-using-githubactions
+      #     path: .backend/api_test_results
 
   e2e-tests:
     name: E2E test execution
