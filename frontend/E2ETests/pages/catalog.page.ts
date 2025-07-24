@@ -83,16 +83,16 @@ export default class Catalog {
     }
 
     public async getactualLastItemDetails() {
+        this.actualLastItemList = [];
         const itemadded = this.page.locator(this.itemList).last();
         this.actualLastItemList.push(await itemadded.locator('td').nth(0).innerText());
         this.actualLastItemList.push(await itemadded.locator('td').nth(1).innerText());
-        console.log(itemadded.locator('td').nth(0).innerText());
-        console.log(itemadded.locator('td').nth(1).innerText());
         console.log ("Actual Last Item List: ", this.actualLastItemList[0], this.actualLastItemList[1]);
         return this.actualLastItemList;
     }
 
     public async getExpectedAddedItemDetails() {
+        this.expectedAddedItemList = [];
         this.expectedAddedItemList.push(data.NametoBeAdded);
         this.expectedAddedItemList.push(data.QuantitytoBeAdded);
         return this.expectedAddedItemList;
@@ -111,6 +111,7 @@ export default class Catalog {
     }
 
     public async getExpectedUpdatedItemDetails() {
+        this.expectedUpdatedItemList = [];
         this.expectedUpdatedItemList.push(data.NameToBeUpdated);
         this.expectedUpdatedItemList.push(data.QuantityToBeUpdated);
         return this.expectedUpdatedItemList;
@@ -122,6 +123,7 @@ export default class Catalog {
     }
 
     public async getItemNameList() {
+        this.actualItemNameList = [];
         const rows = await this.page.locator(this.itemNameList).elementHandles();
         if ((rows).length > 0) {
             for (let i = 0; i < rows.length; i++) {
