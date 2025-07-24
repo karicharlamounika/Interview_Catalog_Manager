@@ -4,8 +4,51 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-test-backend:
-    name: Build Backend and test API
+  # build-test-backend:
+  #   name: Build Backend and test API
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18
+
+  #     - name: Install dependencies and start backend
+  #       run: bash ./setup_backend.sh
+
+  #     - name: Verify backend is started
+  #       run: |
+  #         echo "Waiting for backend to start"
+  #         for i in {1..5}; do
+  #           if curl --fail http://localhost:5000/health; then
+  #             echo "Backend is running!"
+  #             exit 0
+  #           else
+  #             echo "Backend not ready yet. Retrying in 2 seconds..."
+  #             sleep 2
+  #           fi
+  #         done
+  #         echo "Backend did not start in time."
+  #         exit 1
+
+  #     - name: Run API tests
+  #       run: |
+  #         echo "Running API tests"
+  #         cd backend || exit 1
+  #         npm run test:api
+
+  #     - name: Upload test report
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: playwright-report-using-githubactions
+  #         path: .backend/api_test_results
+
+  e2e-tests:
+    name: E2E test execution
     runs-on: ubuntu-latest
 
     steps:
@@ -19,11 +62,11 @@ jobs:
 
       - name: Install dependencies and start backend
         run: bash ./setup_backend.sh
-
+        
       - name: Verify backend is started
         run: |
           echo "Waiting for backend to start"
-          for i in {1..10}; do
+          for i in {1..5}; do
             if curl --fail http://localhost:5000/health; then
               echo "Backend is running!"
               exit 0
@@ -35,39 +78,38 @@ jobs:
           echo "Backend did not start in time."
           exit 1
 
-      - name: Run API tests
-        run: npm run test:api
+      - name: Install dependencies and start frontend
+        run: bash ./setup_frontend.sh
+
+      - name: Verify frontend is started
+        run: |
+          echo "Waiting for frontend to start"
+          for i in {1..5}; do
+            if curl --fail http://localhost:5173/login; then
+              echo "Frontend is running!"
+              exit 0
+            else
+              echo "Frontend not ready yet. Retrying in 2 seconds..."
+              sleep 2
+            fi
+          done
+          echo "Frontend did not start in time."
+          exit 1
+        
+      - name: Install Playwright
+        run: |
+          echo "Installing Playwright dependencies"
+          cd frontend || exit 1
+          npx playwright install
+
+      - name: Run E2E tests
+        run: |
+          echo "Running E2E tests"
+          cd frontend || exit 1
+          npm run test
 
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report-using-githubactions
-          path: ./test-results
-
-  # e2e-tests:
-  #   name: E2E test execution of API and UI
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 18
-
-  #     - name: Install dependencies
-  #       run: npm ci
-        
-  #     - name: Install Playwright
-  #       run: npx playwright install
-
-  #     - name: Run E2E tests
-  #       run: npx playwright test
-
-  #     - name: Upload test report
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: playwright-report-using-githubactions
-  #         path: ./test-results
+          path: ./frontend/test-results
