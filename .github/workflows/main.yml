@@ -26,11 +26,23 @@ jobs:
           cd backend || exit 1
           npm run test:api
 
+          echo "=== Debug Information ==="
+          pwd
+          echo "Current directory contents:"
+          ls -la
+    
+          echo "Looking for test output directories:"
+          find . -type d \( -name "*test*" -o -name "*report*" -o -name "*result*" \) 2>/dev/null || true
+          
+          echo "Looking for test output files:"
+          find . -type f \( -name "*.xml" -o -name "*.json" -o -name "*.html" \) -path "*/test*" 2>/dev/null || true
+
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-using-githubactions
-          path: .backend/api_test_results/
+          name: playwright-report-${{ github.run_number }}
+          path: |
+            ./backend/
 
   e2e-tests:
     name: E2E test execution
@@ -57,8 +69,21 @@ jobs:
           cd frontend || exit 1
           npm run test:ci
 
+          echo "=== Debug Information ==="
+          pwd
+          echo "Current directory contents:"
+          ls -la
+    
+          echo "Looking for test output directories:"
+          find . -type d \( -name "*test*" -o -name "*report*" -o -name "*result*" \) 2>/dev/null || true
+          
+          echo "Looking for test output files:"
+          find . -type f \( -name "*.xml" -o -name "*.json" -o -name "*.html" \) -path "*/test*" 2>/dev/null || true
+
       - name: Upload test report
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-using-githubactions
-          path: ./frontend/test-results/
+          name: playwright-report-${{ github.run_number }}
+          path: |
+            ./frontend/playwright-report/
+            ./frontend/test-results/

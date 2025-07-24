@@ -1,0 +1,4220 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "4c6de255-8e6e-4e2e-890b-237ea5da2e82",
+      "exporter_id": "12081536"
+    },
+    "item": [
+      {
+        "id": "1ce35ecf-a5d3-4e0e-848e-292a12b323aa",
+        "name": "Positive Cases",
+        "item": [
+          {
+            "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+            "name": "Register User",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "register"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "auth": {
+                "type": "noauth",
+                "noauth": []
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "64c40949-7212-438d-a382-b12d1266c114",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var responseBody = pm.response.json();\r",
+                    "pm.test(\"Status code is 201\", function () {\r",
+                    "    pm.response.to.have.status(201);\r",
+                    "});\r",
+                    "pm.test(\"Validate user registration\", function () {\r",
+                    "    pm.expect(responseBody.message).to.eql(\"User registered successfully\");\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+                }
+              },
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "b15b2199-909b-4f5d-b159-881c42e1f2ad",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    ""
+                  ],
+                  "_lastExecutionId": "7f396ddc-f208-4964-bc2f-8e50c60a84bc"
+                }
+              }
+            ]
+          },
+          {
+            "id": "69d7c7f9-7dc5-40f3-b98a-7fa7ed3f85d2",
+            "name": "Login",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "login"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"email\" : \"sheldoncooper@gmail.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "3df13dd1-9d4d-41b3-b71f-6e78b20186c2",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "pm.test(\"Status code is 200\", function () {\r",
+                    "    pm.response.to.have.status(200);\r",
+                    "});\r",
+                    "\r",
+                    "var responseBody = pm.response.json();\r",
+                    "pm.collectionVariables.set(\"Authtoken\", responseBody.token);"
+                  ],
+                  "_lastExecutionId": "cdc6e32d-95ac-4776-b643-5908a4f0d495"
+                }
+              }
+            ]
+          },
+          {
+            "id": "295c35a3-aa3f-45b5-8c83-d1ade321c37a",
+            "name": "Get Items",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "items"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET",
+              "auth": {
+                "type": "noauth",
+                "noauth": []
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "fce11c18-82fc-414e-9b94-eb07b7a502fc",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                    "\r",
+                    "pm.request.headers.add({\r",
+                    "    key: 'Authorization',\r",
+                    "    value: token\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "41fc9423-8d1b-4310-b58f-4ec74dc23f7a"
+                }
+              },
+              {
+                "listen": "test",
+                "script": {
+                  "id": "b67d82a9-975c-445e-b9bc-df8f58731365",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "pm.test(\"Status code is 200\", function () {\r",
+                    "    pm.response.to.have.status(200);\r",
+                    "});\r",
+                    ""
+                  ],
+                  "_lastExecutionId": "3cd7fc71-ff04-4be3-abb8-aea175e2314e"
+                }
+              }
+            ]
+          },
+          {
+            "id": "4f1c3991-b5a7-4ac3-817c-eb41f3253947",
+            "name": "Add Item",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "items"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"name\": \"Iphone 18\", \r\n    \"quantity\": 10\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "57dabff1-f7ac-4161-a2e2-54e11ab30eaa",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                    "\r",
+                    "pm.request.headers.add({\r",
+                    "    key: 'Authorization',\r",
+                    "    value: token\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "cf117c60-b037-4d1f-a6de-f125ffd3a4cb"
+                }
+              },
+              {
+                "listen": "test",
+                "script": {
+                  "id": "1793773c-c318-4983-963b-3e1072f885e3",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var responseBody = pm.response.json();\r",
+                    "\r",
+                    "pm.test(\"Status code is 201\", function () {\r",
+                    "    pm.response.to.have.status(201);\r",
+                    "});\r",
+                    "\r",
+                    "pm.test('Response contains the \"Id\" property', function () {\r",
+                    "    pm.expect(responseBody).to.have.property('id');\r",
+                    "});\r",
+                    "\r",
+                    "\r",
+                    "pm.collectionVariables.set(\"ItemId\", responseBody.id);"
+                  ],
+                  "_lastExecutionId": "10e17eb8-4bb7-4aa7-89fb-87b55a0f0a2a"
+                }
+              }
+            ]
+          },
+          {
+            "id": "153f1977-c60c-48d7-8d65-ed7b05ca4382",
+            "name": "Update Item",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "items",
+                  "{{ItemId}}"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "PUT",
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"name\" : \"Mac Book Air\",\r\n    \"quantity\": \"89\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "1dd73ae7-ce74-4b3b-9552-1c181fd355f7",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                    "var itemId = pm.collectionVariables.get('ItemId')\r",
+                    "\r",
+                    "pm.request.headers.add({\r",
+                    "    key: 'Authorization',\r",
+                    "    value: token\r",
+                    "});\r",
+                    "\r",
+                    ""
+                  ],
+                  "_lastExecutionId": "db31ad62-32b5-4864-8756-4fcef0bc3806"
+                }
+              }
+            ]
+          },
+          {
+            "id": "5cb8facb-8d79-430f-95c7-85979a4548b4",
+            "name": "Delete Item",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "items",
+                  "{{ItemId}}"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "DELETE",
+              "body": {
+                "mode": "raw",
+                "raw": "",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "8e0b0c6c-05b4-4ebd-b45f-b13d4b7d22f8",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                    "\r",
+                    "pm.request.headers.add({\r",
+                    "    key: 'Authorization',\r",
+                    "    value: token\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "c712e5a7-f73f-4aab-bc18-ad1436d667c1"
+                }
+              },
+              {
+                "listen": "test",
+                "script": {
+                  "id": "964c1b1b-0634-4f57-ada4-6f96daf82b7e",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "pm.test(\"Status code is 204\", function () {\r",
+                    "    pm.response.to.have.status(204);\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "b6e4aabf-a8cc-4a74-9cf4-d21a61f7e874"
+                }
+              }
+            ]
+          }
+        ],
+        "event": []
+      },
+      {
+        "id": "a95a1677-55ea-407b-8a63-b6e86cd36915",
+        "name": "Negative Cases",
+        "item": [
+          {
+            "id": "4575af12-6e11-45db-a8c7-2e98ed1f0e3a",
+            "name": "Access Token Missing",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "items"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "GET"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "8f3c14cd-628d-4165-8aaa-a8b6bfe6720a",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var responseBody = pm.response.json();\r",
+                    "pm.test(\"Status code is 401\", function () {\r",
+                    "    pm.response.to.have.status(401);\r",
+                    "});\r",
+                    "pm.test(\"Status message is Unauthorized\", function () {\r",
+                    "    pm.response.to.have.status(\"Unauthorized\");\r",
+                    "});\r",
+                    "pm.test(\"Get items failed as access token is missing\", function () {\r",
+                    "    pm.expect(responseBody.message).to.eql(\"Access token missing\");\r",
+                    "});\r",
+                    "\r",
+                    ""
+                  ],
+                  "_lastExecutionId": "53e6882f-b7a7-4a36-8503-6294be2a3956"
+                }
+              }
+            ]
+          },
+          {
+            "id": "90da6708-1150-44fd-b744-6f996f0632bd",
+            "name": "User Already Exists",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "register"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "c2920862-d8cb-4e01-a4e3-011ea57a41bf",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var responseBody = pm.response.json();\r",
+                    "pm.test(\"Status code is 409\", function () {\r",
+                    "    pm.response.to.have.status(409);\r",
+                    "});\r",
+                    "pm.test(\"user registration failed as User already exists\", function () {\r",
+                    "    pm.expect(responseBody.error).to.eql(\"User already exists\");\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "f2e09c0a-8d78-4193-88a5-8536e65f930f"
+                }
+              }
+            ]
+          },
+          {
+            "id": "82f4b258-be5c-4c1f-90e1-c6c643c27965",
+            "name": "Item Not Found",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "items",
+                  "5"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "DELETE"
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "3dbb8df3-6998-422d-a128-aecd91abe6f4",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                    "\r",
+                    "pm.request.headers.add({\r",
+                    "    key: 'Authorization',\r",
+                    "    value: token\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "e4a92fd0-c1a7-4836-9e93-152f5eb8e541"
+                }
+              },
+              {
+                "listen": "test",
+                "script": {
+                  "id": "52664227-9fbb-4e87-955f-24e4b4788c53",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var responseBody = pm.response.json();\r",
+                    "pm.test(\"Status code is 404\", function () {\r",
+                    "    pm.response.to.have.status(404);\r",
+                    "});\r",
+                    "\r",
+                    "pm.test(\"Delete item failed as Item not found \", function () {\r",
+                    "    pm.expect(responseBody.message).to.eql(\"Item not found\");\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "c4473b4b-1a5a-4e97-81f8-32d6b1344ed5"
+                }
+              }
+            ]
+          },
+          {
+            "id": "2910c340-96d5-49a5-86d0-dcd208a3af4d",
+            "name": "Invalid Credentials",
+            "request": {
+              "url": {
+                "protocol": "http",
+                "port": "5000",
+                "path": [
+                  "login"
+                ],
+                "host": [
+                  "localhost"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "method": "POST",
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"email\" : \"bob231@gma\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "a279fcfb-765e-4753-aa61-fb99047d2b42",
+                  "type": "text/javascript",
+                  "packages": {},
+                  "exec": [
+                    "var responseBody = pm.response.json();\r",
+                    "pm.test(\"Status code is 401\", function () {\r",
+                    "    pm.response.to.have.status(401);\r",
+                    "});\r",
+                    "\r",
+                    "pm.test(\"Login failed with error Invalid credentials \", function () {\r",
+                    "    pm.expect(responseBody.message).to.eql(\"Invalid credentials\");\r",
+                    "});"
+                  ],
+                  "_lastExecutionId": "8f099ef2-5529-4499-aa6d-047366b9e34d"
+                }
+              }
+            ]
+          }
+        ],
+        "event": []
+      }
+    ],
+    "event": [],
+    "variable": [
+      {
+        "type": "any",
+        "value": "",
+        "key": "Authtoken"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ItemId"
+      }
+    ],
+    "info": {
+      "_postman_id": "4c6de255-8e6e-4e2e-890b-237ea5da2e82",
+      "name": "Catalog Manger",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "id": "2b9c9ae9-3271-4c82-8d97-bc4e95667a54",
+    "values": []
+  },
+  "globals": {
+    "id": "e5503db5-d48d-4f41-b533-3da4ad141519",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 15,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 10,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 16,
+        "pending": 0,
+        "failed": 2
+      },
+      "testScripts": {
+        "total": 9,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 6,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 91.3,
+      "responseMin": 6,
+      "responseMax": 280,
+      "responseSd": 78.27777462345233,
+      "dnsAverage": 0,
+      "dnsMin": 0,
+      "dnsMax": 0,
+      "dnsSd": 0,
+      "firstByteAverage": 0,
+      "firstByteMin": 0,
+      "firstByteMax": 0,
+      "firstByteSd": 0,
+      "started": 1753394735419,
+      "completed": 1753394737224
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 10,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "060af3cb-2b61-46ea-a224-0f4da1dd95f0",
+          "httpRequestId": "44732d26-2feb-4fbe-a8cb-41af344adce5"
+        },
+        "item": {
+          "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+          "name": "Register User",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "register"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "64c40949-7212-438d-a382-b12d1266c114",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Validate user registration\", function () {\r",
+                  "    pm.expect(responseBody.message).to.eql(\"User registered successfully\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "b15b2199-909b-4f5d-b159-881c42e1f2ad",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ],
+                "_lastExecutionId": "7f396ddc-f208-4964-bc2f-8e50c60a84bc"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "register"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "9eaeb090-34b7-4ecc-a7db-a75731d94a03",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "127",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "c2f36a8b-5947-48f6-8800-9bd56567f792",
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1f-lFUySNKwX3L5eGEwGcNcUoVKWhE\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:35 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              115,
+              101,
+              114,
+              32,
+              97,
+              108,
+              114,
+              101,
+              97,
+              100,
+              121,
+              32,
+              101,
+              120,
+              105,
+              115,
+              116,
+              115,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 280,
+          "responseSize": 31
+        },
+        "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+        "assertions": [
+          {
+            "assertion": "Status code is 201",
+            "skipped": false,
+            "error": {
+              "name": "AssertionError",
+              "index": 0,
+              "test": "Status code is 201",
+              "message": "expected response to have status code 201 but got 409",
+              "stack": "AssertionError: expected response to have status code 201 but got 409\n   at Object.eval sandbox-script.js:1:1)"
+            }
+          },
+          {
+            "assertion": "Validate user registration",
+            "skipped": false,
+            "error": {
+              "name": "AssertionError",
+              "index": 1,
+              "test": "Validate user registration",
+              "message": "expected undefined to deeply equal 'User registered successfully'",
+              "stack": "AssertionError: expected undefined to deeply equal 'User registered successfully'\n   at Object.eval sandbox-script.js:2:1)"
+            }
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "0978b62c-adcd-4e4b-bfef-85c26cf3e10b",
+          "length": 10,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "ebae9b35-0bea-4402-9bf8-e7f90fd806d3"
+        },
+        "item": {
+          "id": "69d7c7f9-7dc5-40f3-b98a-7fa7ed3f85d2",
+          "name": "Login",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "login"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"sheldoncooper@gmail.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "3df13dd1-9d4d-41b3-b71f-6e78b20186c2",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "var responseBody = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"Authtoken\", responseBody.token);"
+                ],
+                "_lastExecutionId": "cdc6e32d-95ac-4776-b643-5908a4f0d495"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "4c2245c4-8aa2-4ca4-9089-f6a3e47d0e79",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "79",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"email\" : \"sheldoncooper@gmail.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "13595cc5-b696-428b-84e1-77bf3de0ca5c",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "195"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"c3-VykuHn4Zt9cIh+eAow8monMYsQ0\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:35 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              116,
+              111,
+              107,
+              101,
+              110,
+              34,
+              58,
+              34,
+              101,
+              121,
+              74,
+              104,
+              98,
+              71,
+              99,
+              105,
+              79,
+              105,
+              74,
+              73,
+              85,
+              122,
+              73,
+              49,
+              78,
+              105,
+              73,
+              115,
+              73,
+              110,
+              82,
+              53,
+              99,
+              67,
+              73,
+              54,
+              73,
+              107,
+              112,
+              88,
+              86,
+              67,
+              74,
+              57,
+              46,
+              101,
+              121,
+              74,
+              112,
+              90,
+              67,
+              73,
+              54,
+              78,
+              83,
+              119,
+              105,
+              90,
+              87,
+              49,
+              104,
+              97,
+              87,
+              119,
+              105,
+              79,
+              105,
+              74,
+              122,
+              97,
+              71,
+              86,
+              115,
+              90,
+              71,
+              57,
+              117,
+              89,
+              50,
+              57,
+              118,
+              99,
+              71,
+              86,
+              121,
+              81,
+              71,
+              100,
+              116,
+              89,
+              87,
+              108,
+              115,
+              76,
+              109,
+              78,
+              118,
+              98,
+              83,
+              73,
+              115,
+              73,
+              109,
+              108,
+              104,
+              100,
+              67,
+              73,
+              54,
+              77,
+              84,
+              99,
+              49,
+              77,
+              122,
+              77,
+              53,
+              78,
+              68,
+              99,
+              122,
+              78,
+              83,
+              119,
+              105,
+              90,
+              88,
+              104,
+              119,
+              73,
+              106,
+              111,
+              120,
+              78,
+              122,
+              85,
+              122,
+              77,
+              122,
+              107,
+              52,
+              77,
+              122,
+              77,
+              49,
+              102,
+              81,
+              46,
+              68,
+              55,
+              111,
+              81,
+              120,
+              89,
+              84,
+              104,
+              116,
+              103,
+              104,
+              89,
+              118,
+              54,
+              88,
+              101,
+              50,
+              104,
+              45,
+              98,
+              101,
+              85,
+              108,
+              112,
+              79,
+              52,
+              103,
+              117,
+              95,
+              119,
+              110,
+              87,
+              68,
+              87,
+              79,
+              77,
+              72,
+              122,
+              72,
+              77,
+              99,
+              88,
+              85,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 112,
+          "responseSize": 195
+        },
+        "id": "69d7c7f9-7dc5-40f3-b98a-7fa7ed3f85d2",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "dca2119c-8a2f-4d8f-9433-45786e571c58",
+          "length": 10,
+          "cycles": 1,
+          "position": 2,
+          "iteration": 0,
+          "httpRequestId": "3323a865-d908-41e6-acb4-1aa10da3d20f"
+        },
+        "item": {
+          "id": "295c35a3-aa3f-45b5-8c83-d1ade321c37a",
+          "name": "Get Items",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "items"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "fce11c18-82fc-414e-9b94-eb07b7a502fc",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                  "\r",
+                  "pm.request.headers.add({\r",
+                  "    key: 'Authorization',\r",
+                  "    value: token\r",
+                  "});"
+                ],
+                "_lastExecutionId": "41fc9423-8d1b-4310-b58f-4ec74dc23f7a"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "b67d82a9-975c-445e-b9bc-df8f58731365",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  ""
+                ],
+                "_lastExecutionId": "3cd7fc71-ff04-4be3-abb8-aea175e2314e"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "items"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJzaGVsZG9uY29vcGVyQGdtYWlsLmNvbSIsImlhdCI6MTc1MzM5NDczNSwiZXhwIjoxNzUzMzk4MzM1fQ.D7oQxYThtghYv6Xe2h-beUlpO4gu_wnWDWOMHzHMcXU"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "07d75f3b-b7eb-4f8c-826e-8a32a5763682",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET",
+          "auth": {
+            "type": "noauth",
+            "noauth": []
+          }
+        },
+        "response": {
+          "id": "5c0cf9a5-c818-4511-acac-c96a503c55a0",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "259"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"103-TRLMSzIqDUhH2hGtJppkZIqYe54\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:36 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              91,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              54,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              76,
+              101,
+              110,
+              111,
+              118,
+              111,
+              32,
+              83,
+              51,
+              52,
+              48,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              55,
+              56,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              55,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              73,
+              112,
+              104,
+              111,
+              110,
+              101,
+              32,
+              56,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              49,
+              54,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              56,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              73,
+              112,
+              104,
+              111,
+              110,
+              101,
+              32,
+              49,
+              55,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              49,
+              48,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              57,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              73,
+              112,
+              104,
+              111,
+              110,
+              101,
+              32,
+              49,
+              56,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              49,
+              48,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              49,
+              48,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              77,
+              97,
+              99,
+              32,
+              66,
+              111,
+              111,
+              107,
+              32,
+              65,
+              105,
+              114,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              56,
+              57,
+              125,
+              44,
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              50,
+              52,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              73,
+              112,
+              104,
+              111,
+              110,
+              101,
+              32,
+              49,
+              54,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              49,
+              54,
+              125,
+              93
+            ]
+          },
+          "cookie": [],
+          "responseTime": 34,
+          "responseSize": 259
+        },
+        "id": "295c35a3-aa3f-45b5-8c83-d1ade321c37a",
+        "assertions": [
+          {
+            "assertion": "Status code is 200",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "971789da-34fa-48e9-94c0-f31a90d397fb",
+          "length": 10,
+          "cycles": 1,
+          "position": 3,
+          "iteration": 0,
+          "httpRequestId": "fc309054-b685-4578-8bee-45dfc53b17c2"
+        },
+        "item": {
+          "id": "4f1c3991-b5a7-4ac3-817c-eb41f3253947",
+          "name": "Add Item",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "items"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Iphone 18\", \r\n    \"quantity\": 10\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "57dabff1-f7ac-4161-a2e2-54e11ab30eaa",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                  "\r",
+                  "pm.request.headers.add({\r",
+                  "    key: 'Authorization',\r",
+                  "    value: token\r",
+                  "});"
+                ],
+                "_lastExecutionId": "cf117c60-b037-4d1f-a6de-f125ffd3a4cb"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "1793773c-c318-4983-963b-3e1072f885e3",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test('Response contains the \"Id\" property', function () {\r",
+                  "    pm.expect(responseBody).to.have.property('id');\r",
+                  "});\r",
+                  "\r",
+                  "\r",
+                  "pm.collectionVariables.set(\"ItemId\", responseBody.id);"
+                ],
+                "_lastExecutionId": "10e17eb8-4bb7-4aa7-89fb-87b55a0f0a2a"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "items"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJzaGVsZG9uY29vcGVyQGdtYWlsLmNvbSIsImlhdCI6MTc1MzM5NDczNSwiZXhwIjoxNzUzMzk4MzM1fQ.D7oQxYThtghYv6Xe2h-beUlpO4gu_wnWDWOMHzHMcXU"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "566a6a22-e404-4d9c-8264-a4b9051e6d73",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "51",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"name\": \"Iphone 18\", \r\n    \"quantity\": 10\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "aab6bba2-5d3b-43ca-9d07-9d53dc34d3db",
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "42"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"2a-cuFTVe9pNyfyk5Eaxsc2R+ZRoMo\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:36 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              53,
+              57,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              73,
+              112,
+              104,
+              111,
+              110,
+              101,
+              32,
+              49,
+              56,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              49,
+              48,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 134,
+          "responseSize": 42
+        },
+        "id": "4f1c3991-b5a7-4ac3-817c-eb41f3253947",
+        "assertions": [
+          {
+            "assertion": "Status code is 201",
+            "skipped": false
+          },
+          {
+            "assertion": "Response contains the \"Id\" property",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "8099ba7d-d74f-48a3-bc20-c7b508445bb4",
+          "length": 10,
+          "cycles": 1,
+          "position": 4,
+          "iteration": 0,
+          "httpRequestId": "0916377c-ab96-46ac-839d-b3596cf205c2"
+        },
+        "item": {
+          "id": "153f1977-c60c-48d7-8d65-ed7b05ca4382",
+          "name": "Update Item",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "items",
+                "{{ItemId}}"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\" : \"Mac Book Air\",\r\n    \"quantity\": \"89\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "1dd73ae7-ce74-4b3b-9552-1c181fd355f7",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                  "var itemId = pm.collectionVariables.get('ItemId')\r",
+                  "\r",
+                  "pm.request.headers.add({\r",
+                  "    key: 'Authorization',\r",
+                  "    value: token\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "_lastExecutionId": "db31ad62-32b5-4864-8756-4fcef0bc3806"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "items",
+              "59"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJzaGVsZG9uY29vcGVyQGdtYWlsLmNvbSIsImlhdCI6MTc1MzM5NDczNSwiZXhwIjoxNzUzMzk4MzM1fQ.D7oQxYThtghYv6Xe2h-beUlpO4gu_wnWDWOMHzHMcXU"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "2fd423a2-3fc1-41f2-b562-2a7a591743db",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "56",
+              "system": true
+            }
+          ],
+          "method": "PUT",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"name\" : \"Mac Book Air\",\r\n    \"quantity\": \"89\"\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "0ab709c2-c00f-4c33-9744-2790d366c4c1",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "49"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"31-dQwZxBYQVPge+GcModuNXozb6ZE\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:36 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              105,
+              100,
+              34,
+              58,
+              34,
+              53,
+              57,
+              34,
+              44,
+              34,
+              110,
+              97,
+              109,
+              101,
+              34,
+              58,
+              34,
+              77,
+              97,
+              99,
+              32,
+              66,
+              111,
+              111,
+              107,
+              32,
+              65,
+              105,
+              114,
+              34,
+              44,
+              34,
+              113,
+              117,
+              97,
+              110,
+              116,
+              105,
+              116,
+              121,
+              34,
+              58,
+              34,
+              56,
+              57,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 115,
+          "responseSize": 49
+        },
+        "id": "153f1977-c60c-48d7-8d65-ed7b05ca4382"
+      },
+      {
+        "cursor": {
+          "ref": "e1c167d7-fd82-47c5-aa81-5f1a6f7a61d8",
+          "length": 10,
+          "cycles": 1,
+          "position": 5,
+          "iteration": 0,
+          "httpRequestId": "809cd4c2-8476-4a29-b1e0-09dd9d4cb0b5"
+        },
+        "item": {
+          "id": "5cb8facb-8d79-430f-95c7-85979a4548b4",
+          "name": "Delete Item",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "items",
+                "{{ItemId}}"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "DELETE",
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "8e0b0c6c-05b4-4ebd-b45f-b13d4b7d22f8",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                  "\r",
+                  "pm.request.headers.add({\r",
+                  "    key: 'Authorization',\r",
+                  "    value: token\r",
+                  "});"
+                ],
+                "_lastExecutionId": "c712e5a7-f73f-4aab-bc18-ad1436d667c1"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "964c1b1b-0634-4f57-ada4-6f96daf82b7e",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "_lastExecutionId": "b6e4aabf-a8cc-4a74-9cf4-d21a61f7e874"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "items",
+              "59"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJzaGVsZG9uY29vcGVyQGdtYWlsLmNvbSIsImlhdCI6MTc1MzM5NDczNSwiZXhwIjoxNzUzMzk4MzM1fQ.D7oQxYThtghYv6Xe2h-beUlpO4gu_wnWDWOMHzHMcXU"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "f61eaf1a-fd14-4ea0-9602-a248ce326b24",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "DELETE",
+          "body": {
+            "mode": "raw",
+            "raw": "",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "20ef9736-1c73-41a5-9608-2f3015d6f721",
+          "status": "No Content",
+          "code": 204,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:36 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": []
+          },
+          "cookie": [],
+          "responseTime": 90,
+          "responseSize": 0
+        },
+        "id": "5cb8facb-8d79-430f-95c7-85979a4548b4",
+        "assertions": [
+          {
+            "assertion": "Status code is 204",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "1e3e66f8-1322-450c-b746-d750c82d56fd",
+          "length": 10,
+          "cycles": 1,
+          "position": 6,
+          "iteration": 0,
+          "httpRequestId": "1ce19bc2-d224-4d18-88fd-fed3b3ce417c"
+        },
+        "item": {
+          "id": "4575af12-6e11-45db-a8c7-2e98ed1f0e3a",
+          "name": "Access Token Missing",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "items"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "8f3c14cd-628d-4165-8aaa-a8b6bfe6720a",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "pm.test(\"Status message is Unauthorized\", function () {\r",
+                  "    pm.response.to.have.status(\"Unauthorized\");\r",
+                  "});\r",
+                  "pm.test(\"Get items failed as access token is missing\", function () {\r",
+                  "    pm.expect(responseBody.message).to.eql(\"Access token missing\");\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "_lastExecutionId": "53e6882f-b7a7-4a36-8503-6294be2a3956"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "items"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "21e0315d-371c-42ab-b149-366bad999339",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "GET"
+        },
+        "response": {
+          "id": "c3209d0a-7bbb-4284-afb7-1de62f53e7d0",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "34"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"22-mHySlHCODvgk3Kz1vvot/dGIktw\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:36 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              65,
+              99,
+              99,
+              101,
+              115,
+              115,
+              32,
+              116,
+              111,
+              107,
+              101,
+              110,
+              32,
+              109,
+              105,
+              115,
+              115,
+              105,
+              110,
+              103,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 6,
+          "responseSize": 34
+        },
+        "id": "4575af12-6e11-45db-a8c7-2e98ed1f0e3a",
+        "assertions": [
+          {
+            "assertion": "Status code is 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Status message is Unauthorized",
+            "skipped": false
+          },
+          {
+            "assertion": "Get items failed as access token is missing",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "dfbae850-f1e1-4797-8963-f6260b0fd39e",
+          "length": 10,
+          "cycles": 1,
+          "position": 7,
+          "iteration": 0,
+          "httpRequestId": "fbd200a3-8415-4d1a-8d73-3a6afded3dcf"
+        },
+        "item": {
+          "id": "90da6708-1150-44fd-b744-6f996f0632bd",
+          "name": "User Already Exists",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "register"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "c2920862-d8cb-4e01-a4e3-011ea57a41bf",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 409\", function () {\r",
+                  "    pm.response.to.have.status(409);\r",
+                  "});\r",
+                  "pm.test(\"user registration failed as User already exists\", function () {\r",
+                  "    pm.expect(responseBody.error).to.eql(\"User already exists\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "f2e09c0a-8d78-4193-88a5-8536e65f930f"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "register"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "34bff70c-23cd-46a1-87e5-89826b73943c",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "133",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "09f1112e-a5a8-482a-a6c2-7ea56b06ac96",
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "31"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1f-lFUySNKwX3L5eGEwGcNcUoVKWhE\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:36 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              101,
+              114,
+              114,
+              111,
+              114,
+              34,
+              58,
+              34,
+              85,
+              115,
+              101,
+              114,
+              32,
+              97,
+              108,
+              114,
+              101,
+              97,
+              100,
+              121,
+              32,
+              101,
+              120,
+              105,
+              115,
+              116,
+              115,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 113,
+          "responseSize": 31
+        },
+        "id": "90da6708-1150-44fd-b744-6f996f0632bd",
+        "assertions": [
+          {
+            "assertion": "Status code is 409",
+            "skipped": false
+          },
+          {
+            "assertion": "user registration failed as User already exists",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "50a5e3b7-5e1e-4c58-9e83-c0cb35577748",
+          "length": 10,
+          "cycles": 1,
+          "position": 8,
+          "iteration": 0,
+          "httpRequestId": "c3be0f91-5900-4494-afdd-1839cbfa2820"
+        },
+        "item": {
+          "id": "82f4b258-be5c-4c1f-90e1-c6c643c27965",
+          "name": "Item Not Found",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "items",
+                "5"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "DELETE"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "3dbb8df3-6998-422d-a128-aecd91abe6f4",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                  "\r",
+                  "pm.request.headers.add({\r",
+                  "    key: 'Authorization',\r",
+                  "    value: token\r",
+                  "});"
+                ],
+                "_lastExecutionId": "e4a92fd0-c1a7-4836-9e93-152f5eb8e541"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "id": "52664227-9fbb-4e87-955f-24e4b4788c53",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Delete item failed as Item not found \", function () {\r",
+                  "    pm.expect(responseBody.message).to.eql(\"Item not found\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "c4473b4b-1a5a-4e97-81f8-32d6b1344ed5"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "items",
+              "5"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJzaGVsZG9uY29vcGVyQGdtYWlsLmNvbSIsImlhdCI6MTc1MzM5NDczNSwiZXhwIjoxNzUzMzk4MzM1fQ.D7oQxYThtghYv6Xe2h-beUlpO4gu_wnWDWOMHzHMcXU"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "6879f06a-318a-493c-a63b-edb979e8ce03",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            }
+          ],
+          "method": "DELETE"
+        },
+        "response": {
+          "id": "ed69521e-1909-4dc5-9941-991e427fe91b",
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "28"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"1c-OqRAEHB09m693LkZpvKoMUaiB2s\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:37 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              73,
+              116,
+              101,
+              109,
+              32,
+              110,
+              111,
+              116,
+              32,
+              102,
+              111,
+              117,
+              110,
+              100,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 18,
+          "responseSize": 28
+        },
+        "id": "82f4b258-be5c-4c1f-90e1-c6c643c27965",
+        "assertions": [
+          {
+            "assertion": "Status code is 404",
+            "skipped": false
+          },
+          {
+            "assertion": "Delete item failed as Item not found ",
+            "skipped": false
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "9ecefe52-575e-409e-ae66-9b51a9a78f62",
+          "length": 10,
+          "cycles": 1,
+          "position": 9,
+          "iteration": 0,
+          "httpRequestId": "f1f9025a-4b61-4e04-a8ee-f82cb196d01d"
+        },
+        "item": {
+          "id": "2910c340-96d5-49a5-86d0-dcd208a3af4d",
+          "name": "Invalid Credentials",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "login"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\" : \"bob231@gma\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "a279fcfb-765e-4753-aa61-fb99047d2b42",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 401\", function () {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Login failed with error Invalid credentials \", function () {\r",
+                  "    pm.expect(responseBody.message).to.eql(\"Invalid credentials\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "8f099ef2-5529-4499-aa6d-047366b9e34d"
+              }
+            }
+          ]
+        },
+        "request": {
+          "url": {
+            "protocol": "http",
+            "port": "5000",
+            "path": [
+              "login"
+            ],
+            "host": [
+              "localhost"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "system": true
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.39.1",
+              "system": true
+            },
+            {
+              "key": "Accept",
+              "value": "*/*",
+              "system": true
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-cache",
+              "system": true
+            },
+            {
+              "key": "Postman-Token",
+              "value": "9146fc6e-7ffa-4d06-8e19-37fc3d3679a3",
+              "system": true
+            },
+            {
+              "key": "Host",
+              "value": "localhost:5000",
+              "system": true
+            },
+            {
+              "key": "Accept-Encoding",
+              "value": "gzip, deflate, br",
+              "system": true
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive",
+              "system": true
+            },
+            {
+              "key": "Content-Length",
+              "value": "66",
+              "system": true
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "raw",
+            "raw": "{\r\n    \"email\" : \"bob231@gma\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          }
+        },
+        "response": {
+          "id": "545b9df8-e47a-4f3f-84b0-e24073b67047",
+          "status": "Unauthorized",
+          "code": 401,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "33"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"21-dBEoW0UmTF+EGUMaprEp9/8zNNA\""
+            },
+            {
+              "key": "Date",
+              "value": "Thu, 24 Jul 2025 22:05:37 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              109,
+              101,
+              115,
+              115,
+              97,
+              103,
+              101,
+              34,
+              58,
+              34,
+              73,
+              110,
+              118,
+              97,
+              108,
+              105,
+              100,
+              32,
+              99,
+              114,
+              101,
+              100,
+              101,
+              110,
+              116,
+              105,
+              97,
+              108,
+              115,
+              34,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 11,
+          "responseSize": 33
+        },
+        "id": "2910c340-96d5-49a5-86d0-dcd208a3af4d",
+        "assertions": [
+          {
+            "assertion": "Status code is 401",
+            "skipped": false
+          },
+          {
+            "assertion": "Login failed with error Invalid credentials ",
+            "skipped": false
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 702
+    },
+    "failures": [
+      {
+        "error": {
+          "name": "AssertionError",
+          "index": 0,
+          "test": "Status code is 201",
+          "message": "expected response to have status code 201 but got 409",
+          "stack": "AssertionError: expected response to have status code 201 but got 409\n   at Object.eval sandbox-script.js:1:1)",
+          "checksum": "37dd7bf325ada6c5f81ed1ddb1cff881",
+          "id": "e1d6dfbc-fd99-449f-a4d8-02a8af592eca",
+          "timestamp": 1753394735808,
+          "stacktrace": [
+            {
+              "fileName": "sandbox-script.js",
+              "lineNumber": 1,
+              "functionName": "Object.eval",
+              "typeName": "Object",
+              "methodName": "eval",
+              "columnNumber": 1,
+              "native": false
+            }
+          ]
+        },
+        "at": "assertion:0 in test-script",
+        "source": {
+          "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+          "name": "Register User",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "register"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "64c40949-7212-438d-a382-b12d1266c114",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Validate user registration\", function () {\r",
+                  "    pm.expect(responseBody.message).to.eql(\"User registered successfully\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "b15b2199-909b-4f5d-b159-881c42e1f2ad",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ],
+                "_lastExecutionId": "7f396ddc-f208-4964-bc2f-8e50c60a84bc"
+              }
+            }
+          ]
+        },
+        "parent": {
+          "id": "1ce35ecf-a5d3-4e0e-848e-292a12b323aa",
+          "name": "Positive Cases",
+          "item": [
+            {
+              "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+              "name": "Register User",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "register"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "noauth",
+                  "noauth": []
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "64c40949-7212-438d-a382-b12d1266c114",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var responseBody = pm.response.json();\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "pm.test(\"Validate user registration\", function () {\r",
+                      "    pm.expect(responseBody.message).to.eql(\"User registered successfully\");\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "b15b2199-909b-4f5d-b159-881c42e1f2ad",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      ""
+                    ],
+                    "_lastExecutionId": "7f396ddc-f208-4964-bc2f-8e50c60a84bc"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "69d7c7f9-7dc5-40f3-b98a-7fa7ed3f85d2",
+              "name": "Login",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "login"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\" : \"sheldoncooper@gmail.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3df13dd1-9d4d-41b3-b71f-6e78b20186c2",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "var responseBody = pm.response.json();\r",
+                      "pm.collectionVariables.set(\"Authtoken\", responseBody.token);"
+                    ],
+                    "_lastExecutionId": "cdc6e32d-95ac-4776-b643-5908a4f0d495"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "295c35a3-aa3f-45b5-8c83-d1ade321c37a",
+              "name": "Get Items",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "auth": {
+                  "type": "noauth",
+                  "noauth": []
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fce11c18-82fc-414e-9b94-eb07b7a502fc",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "41fc9423-8d1b-4310-b58f-4ec74dc23f7a"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b67d82a9-975c-445e-b9bc-df8f58731365",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      ""
+                    ],
+                    "_lastExecutionId": "3cd7fc71-ff04-4be3-abb8-aea175e2314e"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "4f1c3991-b5a7-4ac3-817c-eb41f3253947",
+              "name": "Add Item",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Iphone 18\", \r\n    \"quantity\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "57dabff1-f7ac-4161-a2e2-54e11ab30eaa",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "cf117c60-b037-4d1f-a6de-f125ffd3a4cb"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1793773c-c318-4983-963b-3e1072f885e3",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var responseBody = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test('Response contains the \"Id\" property', function () {\r",
+                      "    pm.expect(responseBody).to.have.property('id');\r",
+                      "});\r",
+                      "\r",
+                      "\r",
+                      "pm.collectionVariables.set(\"ItemId\", responseBody.id);"
+                    ],
+                    "_lastExecutionId": "10e17eb8-4bb7-4aa7-89fb-87b55a0f0a2a"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "153f1977-c60c-48d7-8d65-ed7b05ca4382",
+              "name": "Update Item",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items",
+                    "{{ItemId}}"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\" : \"Mac Book Air\",\r\n    \"quantity\": \"89\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "1dd73ae7-ce74-4b3b-9552-1c181fd355f7",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "var itemId = pm.collectionVariables.get('ItemId')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});\r",
+                      "\r",
+                      ""
+                    ],
+                    "_lastExecutionId": "db31ad62-32b5-4864-8756-4fcef0bc3806"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "5cb8facb-8d79-430f-95c7-85979a4548b4",
+              "name": "Delete Item",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items",
+                    "{{ItemId}}"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "8e0b0c6c-05b4-4ebd-b45f-b13d4b7d22f8",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "c712e5a7-f73f-4aab-bc18-ad1436d667c1"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "964c1b1b-0634-4f57-ada4-6f96daf82b7e",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Status code is 204\", function () {\r",
+                      "    pm.response.to.have.status(204);\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "b6e4aabf-a8cc-4a74-9cf4-d21a61f7e874"
+                  }
+                }
+              ]
+            }
+          ],
+          "event": []
+        },
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 10,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "060af3cb-2b61-46ea-a224-0f4da1dd95f0",
+          "httpRequestId": "44732d26-2feb-4fbe-a8cb-41af344adce5",
+          "scriptId": "64c40949-7212-438d-a382-b12d1266c114",
+          "execution": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+        }
+      },
+      {
+        "error": {
+          "name": "AssertionError",
+          "index": 1,
+          "test": "Validate user registration",
+          "message": "expected undefined to deeply equal 'User registered successfully'",
+          "stack": "AssertionError: expected undefined to deeply equal 'User registered successfully'\n   at Object.eval sandbox-script.js:2:1)",
+          "checksum": "5ed1fa4b36ba49b901931adcd7d77917",
+          "id": "614af5e3-623a-403e-bec0-766d4c0234dd",
+          "timestamp": 1753394735814,
+          "stacktrace": [
+            {
+              "fileName": "sandbox-script.js",
+              "lineNumber": 2,
+              "functionName": "Object.eval",
+              "typeName": "Object",
+              "methodName": "eval",
+              "columnNumber": 1,
+              "native": false
+            }
+          ]
+        },
+        "at": "assertion:1 in test-script",
+        "source": {
+          "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+          "name": "Register User",
+          "request": {
+            "url": {
+              "protocol": "http",
+              "port": "5000",
+              "path": [
+                "register"
+              ],
+              "host": [
+                "localhost"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth",
+              "noauth": []
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "64c40949-7212-438d-a382-b12d1266c114",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  "var responseBody = pm.response.json();\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "pm.test(\"Validate user registration\", function () {\r",
+                  "    pm.expect(responseBody.message).to.eql(\"User registered successfully\");\r",
+                  "});"
+                ],
+                "_lastExecutionId": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "b15b2199-909b-4f5d-b159-881c42e1f2ad",
+                "type": "text/javascript",
+                "packages": {},
+                "exec": [
+                  ""
+                ],
+                "_lastExecutionId": "7f396ddc-f208-4964-bc2f-8e50c60a84bc"
+              }
+            }
+          ]
+        },
+        "parent": {
+          "id": "1ce35ecf-a5d3-4e0e-848e-292a12b323aa",
+          "name": "Positive Cases",
+          "item": [
+            {
+              "id": "305d8f1b-d62b-4f89-b69e-0e58b6f0c7cb",
+              "name": "Register User",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "register"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"firstName\": \"Sheldon\",\r\n    \"lastName\": \"Cooper\",\r\n    \"password\": \"Test345\",\r\n    \"email\":\"sheldoncooper@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "auth": {
+                  "type": "noauth",
+                  "noauth": []
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "64c40949-7212-438d-a382-b12d1266c114",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var responseBody = pm.response.json();\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "pm.test(\"Validate user registration\", function () {\r",
+                      "    pm.expect(responseBody.message).to.eql(\"User registered successfully\");\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "b15b2199-909b-4f5d-b159-881c42e1f2ad",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      ""
+                    ],
+                    "_lastExecutionId": "7f396ddc-f208-4964-bc2f-8e50c60a84bc"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "69d7c7f9-7dc5-40f3-b98a-7fa7ed3f85d2",
+              "name": "Login",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "login"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\" : \"sheldoncooper@gmail.com\",\r\n    \"password\": \"Test345\"\r\n    \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "3df13dd1-9d4d-41b3-b71f-6e78b20186c2",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "var responseBody = pm.response.json();\r",
+                      "pm.collectionVariables.set(\"Authtoken\", responseBody.token);"
+                    ],
+                    "_lastExecutionId": "cdc6e32d-95ac-4776-b643-5908a4f0d495"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "295c35a3-aa3f-45b5-8c83-d1ade321c37a",
+              "name": "Get Items",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "auth": {
+                  "type": "noauth",
+                  "noauth": []
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fce11c18-82fc-414e-9b94-eb07b7a502fc",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "41fc9423-8d1b-4310-b58f-4ec74dc23f7a"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "b67d82a9-975c-445e-b9bc-df8f58731365",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      ""
+                    ],
+                    "_lastExecutionId": "3cd7fc71-ff04-4be3-abb8-aea175e2314e"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "4f1c3991-b5a7-4ac3-817c-eb41f3253947",
+              "name": "Add Item",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Iphone 18\", \r\n    \"quantity\": 10\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "57dabff1-f7ac-4161-a2e2-54e11ab30eaa",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "cf117c60-b037-4d1f-a6de-f125ffd3a4cb"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1793773c-c318-4983-963b-3e1072f885e3",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var responseBody = pm.response.json();\r",
+                      "\r",
+                      "pm.test(\"Status code is 201\", function () {\r",
+                      "    pm.response.to.have.status(201);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test('Response contains the \"Id\" property', function () {\r",
+                      "    pm.expect(responseBody).to.have.property('id');\r",
+                      "});\r",
+                      "\r",
+                      "\r",
+                      "pm.collectionVariables.set(\"ItemId\", responseBody.id);"
+                    ],
+                    "_lastExecutionId": "10e17eb8-4bb7-4aa7-89fb-87b55a0f0a2a"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "153f1977-c60c-48d7-8d65-ed7b05ca4382",
+              "name": "Update Item",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items",
+                    "{{ItemId}}"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\" : \"Mac Book Air\",\r\n    \"quantity\": \"89\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "1dd73ae7-ce74-4b3b-9552-1c181fd355f7",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "var itemId = pm.collectionVariables.get('ItemId')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});\r",
+                      "\r",
+                      ""
+                    ],
+                    "_lastExecutionId": "db31ad62-32b5-4864-8756-4fcef0bc3806"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "5cb8facb-8d79-430f-95c7-85979a4548b4",
+              "name": "Delete Item",
+              "request": {
+                "url": {
+                  "protocol": "http",
+                  "port": "5000",
+                  "path": [
+                    "items",
+                    "{{ItemId}}"
+                  ],
+                  "host": [
+                    "localhost"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "8e0b0c6c-05b4-4ebd-b45f-b13d4b7d22f8",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "var token = 'Bearer ' + pm.collectionVariables.get('Authtoken')\r",
+                      "\r",
+                      "pm.request.headers.add({\r",
+                      "    key: 'Authorization',\r",
+                      "    value: token\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "c712e5a7-f73f-4aab-bc18-ad1436d667c1"
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "964c1b1b-0634-4f57-ada4-6f96daf82b7e",
+                    "type": "text/javascript",
+                    "packages": {},
+                    "exec": [
+                      "pm.test(\"Status code is 204\", function () {\r",
+                      "    pm.response.to.have.status(204);\r",
+                      "});"
+                    ],
+                    "_lastExecutionId": "b6e4aabf-a8cc-4a74-9cf4-d21a61f7e874"
+                  }
+                }
+              ]
+            }
+          ],
+          "event": []
+        },
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 10,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "060af3cb-2b61-46ea-a224-0f4da1dd95f0",
+          "httpRequestId": "44732d26-2feb-4fbe-a8cb-41af344adce5",
+          "scriptId": "64c40949-7212-438d-a382-b12d1266c114",
+          "execution": "8078cbb7-2996-4d48-8f7c-8ebb2703e6df"
+        }
+      }
+    ],
+    "error": null
+  }
+}
