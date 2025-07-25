@@ -1,3 +1,8 @@
+echo "Cleaning up test results before running all tests..."
+rm -rf backend/api_test_results
+rm -rf frontend/test-results
+rm -rf frontend/playwright-report
+
 echo "Running API tests..."
 echo "Switching to backend directory..."
 cd backend

@@ -1,4 +1,9 @@
 @echo off
+echo "Cleaning up test results before running all tests..."
+del /Q backend\api_test_results
+del /Q frontend\test-results
+del /Q frontend\playwright-report
+
 echo Running API tests...
 echo Switching to backend directory...
 cd backend

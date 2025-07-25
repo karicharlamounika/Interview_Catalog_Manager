@@ -47,7 +47,7 @@ This document outlines the testing strategy for the Inventory Catalog Manager ap
 
 ## 5. Assumptions / Limitations
 
-- Test data will be reset between test runs.
+- Test data is hard coded for api and UI both. While rer-unning tests locally update email in testData.json for e2e and       catalogmanger.postman_collection.json for api
 - Only functional aspects are covered; non-functional requirements are excluded.
 - ELement state validations are not covered as they are component testing scenarios
 - Scennarios related to invalid login credentials is limited to API tests to avoid retundancy of tests
